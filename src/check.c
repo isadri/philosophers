@@ -1,0 +1,31 @@
+#include <philosophers.h>
+
+static bool	is_valid_number(char *arg);
+
+int	check_arguments(char *argv[])
+{
+	char	*args[5];
+	int		i;
+
+	args[0] = "number_of_philosopher";
+	args[1] = "time_to_die";
+	args[2] = "time_to_eat";
+	args[3] = "time_to_sleep";
+	args[4] = "number_of_times_each_philosopher_must_eat";
+	i = 0;
+	while (argv[++i])
+	{
+		if (is_valid_number(argv[i]) == false)
+			return (invalid_arg(argv[i], args[i]), EOF);
+	}
+	return (OK);
+}
+
+static bool	is_valid_number(char *arg)
+{
+	if (*arg == '\0')
+		return (false);
+	while (*arg && is_digit(*arg))
+		arg++;
+	return (*arg == '\0');
+}
