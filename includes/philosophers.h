@@ -20,7 +20,7 @@ typedef struct s_time
 {
 	time_t	time_to_eat;
 	time_t	time_to_sleep;
-	time_t	current_time;
+	time_t	last_time;
 }	t_time;
 
 typedef struct s_philo
@@ -29,6 +29,7 @@ typedef struct s_philo
 	unsigned int	id;
 	t_time			time;
 	unsigned int	eat_counter;
+	unsigned int	nbr_of_meals;
 	time_t			start_time;
 	pthread_mutex_t	*left_fork;
 	pthread_mutex_t	*right_fork;
@@ -39,7 +40,6 @@ typedef struct s_data
 	t_philo			*philos;
 	time_t			time_to_die;
 	unsigned int	nbr_of_philos;
-	unsigned int	max_eat;
 	pthread_mutex_t	*forks;
 	time_t			start_time;
 }	t_data;

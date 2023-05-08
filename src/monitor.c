@@ -7,7 +7,7 @@ bool	someone_dies(t_philo *philos, t_data *data)
 	i = 0;
 	while (i < data->nbr_of_philos)
 	{
-		if (get_current_time() - philos->time.current_time >= data->time_to_die)
+		if (get_current_time() - philos[i].time.last_time >= data->time_to_die)
 			return (true);
 		i++;
 	}
@@ -21,10 +21,9 @@ bool	all_eat(t_philo *philos, t_data *data)
 	i = 0;
 	while (i < data->nbr_of_philos)
 	{
-		if (philos[i].eat_counter != data->max_eat)
+		if (philos[i].eat_counter != data->philos->nbr_of_meals)
 			return (false);
 		i++;
 	}
 	return (true);
 }
-

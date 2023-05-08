@@ -2,7 +2,6 @@
 
 static pthread_mutex_t	*forks_create(int nbr);
 static void				forks_init(pthread_mutex_t *forks, int nbr);
-static unsigned int		get_max_eat(char *arg);
 
 void	data_init(t_data **data, char *argv[])
 {
@@ -14,9 +13,8 @@ void	data_init(t_data **data, char *argv[])
 	if (gettimeofday(&tv, NULL) == -1)
 		exit(EXIT_FAILURE);
 	(*data)->nbr_of_philos = nbr_of_philos;
-	(*data)->time_to_die = ft_atoi(argv[2]);
+	(*data)->time_to_die = ft_atoi(argv[2]) * 1000;
 	(*data)->forks = forks_create(nbr_of_philos);
-	(*data)->max_eat = get_max_eat(argv[5]);
 	(*data)->start_time = get_current_time();
 	(*data)->philos = philos_create(argv, *data, nbr_of_philos);
 }
@@ -42,11 +40,4 @@ static void	forks_init(pthread_mutex_t *forks, int nbr)
 		if (err != 0)
 			exit_func_call_err("pthread_mutex_init", err);
 	}
-}
-
-static unsigned int	get_max_eat(char *arg)
-{
-	if (arg == NULL)
-		return (1);
-	return (ft_atoi(arg));
 }

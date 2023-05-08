@@ -5,13 +5,14 @@ static void	detach_philos(t_philo *philos, unsigned int nbr_of_philos);
 
 void	launch(t_data *data)
 {
-	t_philo		*philos;
+	t_philo			*philos;
 
 	philos = data->philos;
 	launch_philos(philos, data);
 	detach_philos(philos, data->nbr_of_philos);
-	while (!all_eat(philos, data) && !someone_dies(philos, data))
-		;
+	while (!all_eat(philos, data));
+	//while (!all_eat(philos, data) && !someone_dies(philos, data))
+		//;
 }
 
 static void	launch_philos(t_philo *philos, t_data *data)
@@ -51,8 +52,8 @@ time_t	get_current_time(void)
 	struct timeval	tv;
 
 	if (gettimeofday(&tv, NULL) == -1)
-		perror("gettimeofday");
-	return (tv.tv_sec * 1000 + tv.tv_usec / 1000);
+		return (perror("gettimeofday"), 0);
+	return ((tv.tv_sec * 1000) + (tv.tv_usec / 1000));
 }
 
 time_t	get_action_time(t_philo *philo)

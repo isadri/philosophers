@@ -4,7 +4,7 @@ void	print_data(t_data *data)
 {
 	printf("nbr_of_philos: %u\n\n", data->nbr_of_philos);
 	print_philos(data->philos, data->nbr_of_philos);
-	printf("\neat_counter: %u\n", data->max_eat);
+	printf("\neat_counter: %u\n", data->philos->nbr_of_meals);
 }
 
 void	print_philos(t_philo *philos, int nbr)
