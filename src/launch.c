@@ -10,9 +10,11 @@ void	launch(t_data *data)
 	philos = data->philos;
 	launch_philos(philos, data);
 	detach_philos(philos, data->nbr_of_philos);
-	while (!all_eat(philos, data));
-	//while (!all_eat(philos, data) && !someone_dies(philos, data))
-		//;
+	while (1);
+	//while (!all_eat(philos, data))
+	//	;
+	while (!all_eat(philos, data) && !someone_dies(philos, data))
+		;
 }
 
 static void	launch_philos(t_philo *philos, t_data *data)
@@ -23,11 +25,11 @@ static void	launch_philos(t_philo *philos, t_data *data)
 	i = 0;
 	while (i < data->nbr_of_philos)
 	{
-		if ((i + 1) % 2 != 0)
-			usleep(20);
 		err = pthread_create(&(philos[i].ph), NULL, start, &(philos[i]));
 		if (err != 0)
 			exit_func_call_err("pthread_create", err);
+		if ((i + 1) % 2 != 0)
+			usleep(30);
 		i++;
 	}
 }

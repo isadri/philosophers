@@ -8,7 +8,7 @@ bool	someone_dies(t_philo *philos, t_data *data)
 	while (i < data->nbr_of_philos)
 	{
 		if (get_current_time() - philos[i].time.last_time >= data->time_to_die)
-			return (true);
+			return (printf("%ld %u dies\n", get_action_time(philos + i), philos[i].id), true);
 		i++;
 	}
 	return (false);

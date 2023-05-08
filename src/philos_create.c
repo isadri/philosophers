@@ -27,6 +27,7 @@ static void	set_time(t_philo *philo, time_t start_time, char *argv[])
 {
 	philo->time.time_to_eat = ft_atoi(argv[3]) * 1000;
 	philo->time.time_to_sleep = ft_atoi(argv[4]) * 1000;
+	philo->time.last_time = get_current_time();
 	philo->start_time = start_time;
 }
 
