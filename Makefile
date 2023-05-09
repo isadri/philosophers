@@ -12,10 +12,9 @@ SRC_DIR := src/
 DIRS = $(addprefix $(OBJ_DIR),src/ utils/)
 
 HEADERS = $(addprefix includes/,philosophers.h)
-SRC_SRCS = $(addprefix src/,check.c debug.c error.c init.c philos_create.c launch.c \
-monitor.c start.c)
+SRC_SRCS = $(addprefix src/,check.c debug.c clear.c error.c init.c launch.c start.c) 
 SRC_OBJS = $(patsubst sr/%.c,obj/src/%.o,$(SRC_SRCS))
-UTILS_SRCS = $(addprefix utils/,ctype.c ft_atoi.c ft_calloc.c clear.c)
+UTILS_SRCS = $(addprefix utils/,ctype.c my_atoi.c my_calloc.c)
 UTILS_OBJS = $(patsubst utils/%.c,obj/utils/%.o,$(UTILS_SRCS))
 
 DEPENDENCIES = $(SRC_SRCS) $(UTILS_SRCS) $(HEADERS)

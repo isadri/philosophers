@@ -2,17 +2,19 @@
 
 int	main(int argc, char *argv[])
 {
-	t_data	*data;
+	t_philo	*philos;
 
 	if (argc < 5)
-		exit_usg_err();
+		return (usage_err(), 1);
 	if (check_arguments(argv) == EOF)
-		exit(INVALID_ARGS);
-	data_init(&data, argv);
-	if (data->philos->nbr_of_meals == 0)
-		exit(EXIT_SUCCESS);
-	launch(data);
-	//print_data(data);
-	clear(&data);
+		return (2);
+	philos_init(&philos, argv);
+	if (philos->nbr_of_meals == 0)
+		return (0);
+	if (launch(philos) == 0)
+		return (clear(&philos), 3);
+	//print_data(philos);
+	clear(&philos);
+	//system("leaks philo");
 	exit(EXIT_SUCCESS);
 }

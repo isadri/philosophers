@@ -3,7 +3,7 @@
 static bool				ft_isblank(char c);
 static unsigned short	getsign(char c);
 
-unsigned long	ft_atoi(char *str)
+unsigned long	my_atoi(char *str)
 {
 	unsigned long	val;
 	unsigned short	sign;

@@ -1,10 +1,9 @@
 #include <philosophers.h>
 
-void	exit_usg_err(void)
+void	usage_err(void)
 {
 	printf(USG_ERR_MSG " number_of_philosophers time_to_die time_to_eat "
 		"time_to_sleep [number_of_times_each_philosopher_must_eat]\n");
-	exit(USG_ERR);
 }
 
 void	invalid_arg(char *arg, char *expected_arg)

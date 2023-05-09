@@ -1,21 +1,22 @@
 #include <philosophers.h>
 
-void	print_data(t_data *data)
+void	print_data(t_philo *philos)
 {
-	printf("nbr_of_philos: %u\n\n", data->nbr_of_philos);
-	print_philos(data->philos, data->nbr_of_philos);
-	printf("\neat_counter: %u\n", data->philos->nbr_of_meals);
-}
+	unsigned int	nbr;
+	unsigned int	i;
 
-void	print_philos(t_philo *philos, int nbr)
-{
-	for (int i = 0; i < nbr; i++)
+	nbr = philos->nbr_of_philos;
+	i = 0;
+	while (i < nbr)
 	{
-		printf("philo id: %d\n", i + 1);
-		printf("time_to_eat: %ld\n", philos->time.time_to_eat);
-		printf("time_to_sleep: %ld\n", philos->time.time_to_sleep);
-		printf("left_fork: %d\n", i + 1);
-		printf("right_fork: %d\n", (i + 1) % 5 + 1);
-		printf("\t-----------\n");
+		printf("id: %u\n", philos[i].id);
+		printf("nbr_of_meals: %d\n", philos[i].nbr_of_meals);
+		printf("nbr_of_philos: %u\n", philos[i].nbr_of_philos);
+		printf("time_to_die: %ld\n", philos[i].time.time_to_die);
+		printf("time_to_eat: %ld\n", philos[i].time.time_to_eat);
+		printf("time_to_sleep: %ld\n", philos[i].time.time_to_sleep);
+		printf("start_time: %ld\n", philos[i].time.start_time);
+		printf("last_eat_time: %ld\n\n", philos[i].time.last_eat_time);
+		i++;
 	}
 }

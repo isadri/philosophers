@@ -1,64 +1,72 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   launch.c                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: iabkadri <iabkadri@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/05/09 19:49:01 by iabkadri          #+#    #+#             */
+/*   Updated: 2023/05/09 21:34:49 by iabkadri         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include <philosophers.h>
 
-static void	launch_philos(t_philo *philos, t_data *data);
-static void	detach_philos(t_philo *philos, unsigned int nbr_of_philos);
+static int	create_philo(t_philo *philo);
+static int	detach_philo(t_philo *philo);
 
-void	launch(t_data *data)
+int	launch(t_philo *philo)
 {
-	t_philo			*philos;
-
-	philos = data->philos;
-	launch_philos(philos, data);
-	detach_philos(philos, data->nbr_of_philos);
-	while (1);
-	//while (!all_eat(philos, data))
-	//	;
-	while (!all_eat(philos, data) && !someone_dies(philos, data))
-		;
+	if (create_philo(philo) == 0)
+		return (0);
+	if (detach_philo(philo) == 0)
+		return (0);
+	while (true);
 }
 
-static void	launch_philos(t_philo *philos, t_data *data)
+static int	create_philo(t_philo *philo)
 {
-	int				err;
 	unsigned int	i;
+	unsigned int	nbr;
 
+	nbr = philo->nbr_of_philos;
 	i = 0;
-	while (i < data->nbr_of_philos)
+	while (i < nbr)
 	{
-		err = pthread_create(&(philos[i].ph), NULL, start, &(philos[i]));
-		if (err != 0)
-			exit_func_call_err("pthread_create", err);
-		if ((i + 1) % 2 != 0)
-			usleep(30);
+		if ((i % 1) % nbr != 0)
+			usleep(40);
+		if (pthread_create(&philo[i].ph, NULL, start, &philo[i]) != 0)
+			return (0);
 		i++;
 	}
+	return (1);
 }
 
-static void	detach_philos(t_philo *philos, unsigned int nbr_of_philos)
+static int	detach_philo(t_philo *philo)
 {
-	int				err;
 	unsigned int	i;
+	unsigned int	nbr;
 
+	nbr = philo->nbr_of_philos;
 	i = 0;
-	while (i < nbr_of_philos)
+	while (i < nbr)
 	{
-		err = pthread_detach((philos[i].ph));
-		if (err != 0)
-			exit_func_call_err("pthread_detach", err);
+		if (pthread_detach(philo[i].ph) != 0)
+			return (0);
 		i++;
 	}
+	return (1);
 }
 
 time_t	get_current_time(void)
 {
 	struct timeval	tv;
 
-	if (gettimeofday(&tv, NULL) == -1)
-		return (perror("gettimeofday"), 0);
+	gettimeofday(&tv, NULL);
 	return ((tv.tv_sec * 1000) + (tv.tv_usec / 1000));
 }
 
-time_t	get_action_time(t_philo *philo)
+time_t	calculate_time(time_t start_time)
 {
-	return (get_current_time() - philo->start_time);
+	return (get_current_time() - start_time);
 }

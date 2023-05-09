@@ -1,64 +1,87 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   start.c                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: iabkadri <iabkadri@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/05/09 19:59:17 by iabkadri          #+#    #+#             */
+/*   Updated: 2023/05/09 21:14:33 by iabkadri         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include <philosophers.h>
 
-static void	eat(t_philo *philo);
-static void	sleep_and_think(t_philo *philo);
+static void	eat_think_sleep(t_philo *philo);
 static void	acquire(t_philo *philo);
 static void	release(t_philo *philo);
+void		secure_print(char *msg, t_philo *philo);
+bool		eat_nbr_of_meals(t_philo *philo);
 
 void	*start(void *arg)
 {
-	t_philo			*philo;
-	unsigned int	i;
+	t_philo	*philo;
 
 	philo = (t_philo *)arg;
-	i = 0;
-	while (i < philo->nbr_of_meals)
+	while (true)
 	{
-		eat(philo);
-		sleep_and_think(philo);
+		eat_think_sleep(philo);
+		if (eat_nbr_of_meals(philo))
+			return (NULL);
 	}
-	return (NULL);
 }
 
-static void	eat(t_philo *philo)
+static void	eat_think_sleep(t_philo *philo)
 {
 	acquire(philo);
-	printf("%ld %d is eating\n", get_action_time(philo), philo->id);
+	secure_print("is eating", philo);
 	usleep(philo->time.time_to_eat);
-	philo->time.last_time = get_current_time();
+	increase_meal_counter(philo);
 	release(philo);
-	philo->eat_counter++;
+	secure_print("is sleeping", philo);
+	usleep(philo->time.time_to_sleep);
+	secure_print("is thinking", philo);
 }
 
-static void	sleep_and_think(t_philo *philo)
+void	increase_meal_counter(t_philo *philo)
 {
-	printf("%ld %d is sleeping\n", get_action_time(philo), philo->id);
-	usleep(philo->time.time_to_sleep);
-	printf("%ld %d is thinking\n", get_action_time(philo), philo->id);
+	pthread_mutex_lock(philo->mtx.meal_mtx);
+	philo->meal++;
+	pthread_mutex_unlock(philo->mtx.meal_mtx);
 }
 
 static void	acquire(t_philo *philo)
 {
-	int	err;
-
-	err = pthread_mutex_lock(philo->left_fork);
-	if (err != 0)
-		exit_func_call_err("pthread_mutex_lock", err);
-	printf("%ld %d has taken a fork\n", get_action_time(philo), philo->id);
-	err = pthread_mutex_lock(philo->right_fork);
-	if (err != 0)
-		exit_func_call_err("pthread_mutex_lock", err);
-	printf("%ld %d has taken a fork\n", get_action_time(philo), philo->id);
+	pthread_mutex_lock(philo->mtx.left_fork);
+	secure_print("has taken a fork", philo);
+	pthread_mutex_lock(philo->mtx.right_fork);
+	secure_print("has taken a fork", philo);
+	pthread_mutex_unlock(philo->mtx.left_fork);
+	pthread_mutex_unlock(philo->mtx.right_fork);
 }
 
 static void	release(t_philo *philo)
 {
-	int	err;
+	pthread_mutex_unlock(philo->mtx.left_fork);
+	pthread_mutex_unlock(philo->mtx.right_fork);
+}
 
-	err = pthread_mutex_unlock(philo->left_fork);
-	if (err != 0)
-		exit_func_call_err("pthread_mutex_unlock", err);
-	err = pthread_mutex_unlock(philo->right_fork);
-	if (err != 0)
-		exit_func_call_err("pthread_mutex_unlock", err);
+void	secure_print(char *msg, t_philo *philo)
+{
+	pthread_mutex_lock(philo->mtx.print_mtx);
+	printf("%ld %u %s\n", calculate_time(philo->time.start_time),
+		philo->id, msg);
+	pthread_mutex_unlock(philo->mtx.print_mtx);
+}
+
+bool	eat_nbr_of_meals(t_philo *philo)
+{
+	bool	equal;
+
+	equal = 0;
+	pthread_mutex_lock(philo->mtx.meal_mtx);
+	if (philo->meal == philo->nbr_of_meals)
+		equal = 1;
+	pthread_mutex_unlock(philo->mtx.meal_mtx);
+	return (equal);
 }
