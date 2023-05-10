@@ -6,7 +6,7 @@
 /*   By: iabkadri <iabkadri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/10 11:36:40 by iabkadri          #+#    #+#             */
-/*   Updated: 2023/05/10 16:49:00 by iabkadri         ###   ########.fr       */
+/*   Updated: 2023/05/10 17:00:01 by iabkadri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ int	mtx_init(t_philo **philos, uint16_t nbr)
 pthread_mutex_t	*get_forks_mtx(uint16_t nbr)
 {
 	pthread_mutex_t	*forks_mtx;
-	uint16_t	i;
+	uint16_t		i;
 
 	forks_mtx = my_calloc(nbr, sizeof(pthread_mutex_t));
 	if (forks_mtx == NULL)

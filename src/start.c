@@ -6,7 +6,7 @@
 /*   By: iabkadri <iabkadri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/09 19:59:17 by iabkadri          #+#    #+#             */
-/*   Updated: 2023/05/10 16:49:52 by iabkadri         ###   ########.fr       */
+/*   Updated: 2023/05/10 16:50:28 by iabkadri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,15 +61,3 @@ void	secure_print(char *msg, t_philo *philo)
 		philo->id, msg);
 	release(philo->mtx.print_mtx);
 }
-
-//bool	eat_nbr_of_meals(t_philo *philo)
-//{
-//	bool	equal;
-
-//	equal = 0;
-//	pthread_mutex_lock(philo->mtx.meal_mtx);
-//	if (philo->meal == philo->nbr_of_meals)
-//		equal = 1;
-//	pthread_mutex_unlock(philo->mtx.meal_mtx);
-//	return (equal);
-//}

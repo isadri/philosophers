@@ -5,17 +5,16 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: iabkadri <iabkadri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/05/08 15:53:25 by iabkadri          #+#    #+#             */
-/*   Updated: 2023/05/09 18:00:42by iabkadri         ###   ########.fr       */
+/*   Created: 2023/05/10 16:59:47 by iabkadri          #+#    #+#             */
+/*   Updated: 2023/05/10 16:59:48 by iabkadri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <philosophers.h>
 
 static int	set_time(t_philo **philos, char *argv[]);
-//static void	fill_time_struct(t_time time, char *argv[]);
-void	set_nbr_of_meals(t_philo *philo, char *arg, uint16_t nbr);
-void	set_nbr_of_philos(t_philo *philo, uint16_t nbr);
+static void	set_nbr_of_meals(t_philo *philo, char *arg, uint16_t nbr);
+static void	set_nbr_of_philos(t_philo *philo, uint16_t nbr);
 
 int	philos_init(t_philo **philos, char *argv[])
 {
@@ -34,7 +33,7 @@ int	philos_init(t_philo **philos, char *argv[])
 	return (1);
 }
 
-void	set_nbr_of_philos(t_philo *philo, uint16_t nbr)
+static void	set_nbr_of_philos(t_philo *philo, uint16_t nbr)
 {
 	uint16_t	i;
 
@@ -43,7 +42,7 @@ void	set_nbr_of_philos(t_philo *philo, uint16_t nbr)
 		philo[i++].nbr_of_philos = nbr;
 }
 
-void	set_nbr_of_meals(t_philo *philo, char *arg, uint16_t nbr)
+static void	set_nbr_of_meals(t_philo *philo, char *arg, uint16_t nbr)
 {
 	int			nbr_of_meals;
 	uint16_t	i;
