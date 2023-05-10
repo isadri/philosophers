@@ -2,9 +2,25 @@
 
 void	clear(t_philo **philos)
 {
-	free((*philos)->mtx.head_forks_mtx);
-	free((*philos)->mtx.head_meal_mtx);
+	clear_forks_mtx((*philos)->mtx.head_forks_mtx, (*philos)->nbr_of_philos);
+	free((*philos)->mtx.head_meals_mtx);
 	free((*philos)->mtx.print_mtx);
 	free((*philos)->mtx.time_mtx);
 	free(*philos);
+}
+
+void	clear_forks_mtx(pthread_mutex_t *forks_mtx, uint16_t nbr)
+{
+	uint16_t	i;
+
+	i = 0;
+	while (i < nbr)
+		pthread_mutex_destroy(&forks_mtx[i++]);
+	free(forks_mtx);
+}
+
+void	clear_mtx(pthread_mutex_t *mtx)
+{
+	pthread_mutex_destroy(mtx);
+	free(mtx);
 }

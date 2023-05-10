@@ -6,52 +6,54 @@
 /*   By: iabkadri <iabkadri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/09 19:49:01 by iabkadri          #+#    #+#             */
-/*   Updated: 2023/05/09 21:34:49 by iabkadri         ###   ########.fr       */
+/*   Updated: 2023/05/10 16:43:55 by iabkadri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <philosophers.h>
 
-static int	create_philo(t_philo *philo);
-static int	detach_philo(t_philo *philo);
+static int	create_philos(t_philo *philo);
+static int	detach_philos(t_philo *philo);
 
-int	launch(t_philo *philo)
+int	launch(t_philo *philos)
 {
-	if (create_philo(philo) == 0)
+	if (create_philos(philos) == 0)
 		return (0);
-	if (detach_philo(philo) == 0)
+	if (detach_philos(philos) == 0)
 		return (0);
-	while (true);
+	monitor(philos);
+	destroy_mutexes(philos);
+	return (1);
 }
 
-static int	create_philo(t_philo *philo)
+static int	create_philos(t_philo *philos)
 {
-	unsigned int	i;
-	unsigned int	nbr;
+	uint16_t	i;
+	uint16_t	nbr;
 
-	nbr = philo->nbr_of_philos;
+	nbr = philos->nbr_of_philos;
 	i = 0;
 	while (i < nbr)
 	{
-		if ((i % 1) % nbr != 0)
-			usleep(40);
-		if (pthread_create(&philo[i].ph, NULL, start, &philo[i]) != 0)
+		if (pthread_create(&philos[i].ph, NULL, start, &philos[i]))
 			return (0);
+		if ((i + 1) % 2 != 0)
+			usleep(60);
 		i++;
 	}
 	return (1);
 }
 
-static int	detach_philo(t_philo *philo)
+static int	detach_philos(t_philo *philos)
 {
-	unsigned int	i;
-	unsigned int	nbr;
+	uint16_t	i;
+	uint16_t	nbr;
 
-	nbr = philo->nbr_of_philos;
+	nbr = philos->nbr_of_philos;
 	i = 0;
 	while (i < nbr)
 	{
-		if (pthread_detach(philo[i].ph) != 0)
+		if (pthread_detach(philos[i].ph) != 0)
 			return (0);
 		i++;
 	}
