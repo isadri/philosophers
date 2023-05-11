@@ -6,7 +6,7 @@
 /*   By: iabkadri <iabkadri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/10 16:52:26 by iabkadri          #+#    #+#             */
-/*   Updated: 2023/05/10 16:52:27 by iabkadri         ###   ########.fr       */
+/*   Updated: 2023/05/11 12:46:49 by iabkadri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ int	check_arguments(char *argv[])
 	args[2] = "time_to_eat";
 	args[3] = "time_to_sleep";
 	args[4] = "number_of_times_each_philosopher_must_eat";
-	i = 0;
+	i = -1;
 	while (argv[++i])
 	{
 		if (is_valid_number(argv[i]) == false)

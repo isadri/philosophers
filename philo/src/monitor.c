@@ -6,7 +6,7 @@
 /*   By: iabkadri <iabkadri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/10 09:06:52 by iabkadri          #+#    #+#             */
-/*   Updated: 2023/05/11 08:42:14 by iabkadri         ###   ########.fr       */
+/*   Updated: 2023/05/11 14:58:39 by iabkadri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,9 +30,8 @@ static bool	secure_time_check(t_philo *philos)
 	i = 0;
 	while (i < nbr_of_philos)
 	{
-		my_usleep(10);
 		if (philo_is_dead(&philos[i]))
-			return (secure_print("died", &philos[i]), false);
+			return (secure_print("has died", &philos[i]), false);
 		i++;
 	}
 	return (true);

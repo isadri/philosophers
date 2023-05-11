@@ -6,7 +6,7 @@
 /*   By: iabkadri <iabkadri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/10 16:52:15 by iabkadri          #+#    #+#             */
-/*   Updated: 2023/05/11 08:56:18 by iabkadri         ###   ########.fr       */
+/*   Updated: 2023/05/11 12:47:23 by iabkadri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,9 +16,9 @@ int	main(int argc, char *argv[])
 {
 	t_philo	*philos;
 
-	if (argc < 5)
+	if (argc < 5 || argc > 6)
 		return (usage_err(), 1);
-	if (check_arguments(argv) == EOF)
+	if (check_arguments(argv + 1) == EOF)
 		return (2);
 	if (philos_init(&philos, argv) == 0)
 		return (3);
