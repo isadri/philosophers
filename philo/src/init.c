@@ -6,7 +6,7 @@
 /*   By: iabkadri <iabkadri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/10 16:59:47 by iabkadri          #+#    #+#             */
-/*   Updated: 2023/05/10 16:59:48 by iabkadri         ###   ########.fr       */
+/*   Updated: 2023/05/14 10:19:50 by iabkadri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 static int	set_time(t_philo **philos, char *argv[]);
 static void	set_nbr_of_meals(t_philo *philo, char *arg, uint16_t nbr);
 static void	set_nbr_of_philos(t_philo *philo, uint16_t nbr);
+static int	get_nbr_of_meals(char *arg);
 
 int	philos_init(t_philo **philos, char *argv[])
 {
@@ -27,9 +28,9 @@ int	philos_init(t_philo **philos, char *argv[])
 	set_nbr_of_meals(*philos, argv[5], nbr_of_philos);
 	set_nbr_of_philos(*philos, nbr_of_philos);
 	if (set_time(philos, argv) == 0)
-		return (clear(philos), 0);
+		return (free(*philos), 0);
 	if (mtx_init(philos, nbr_of_philos) == 0)
-		return (free(philos), 0);
+		return (free(*philos), 0);
 	return (1);
 }
 
@@ -47,11 +48,7 @@ static void	set_nbr_of_meals(t_philo *philo, char *arg, uint16_t nbr)
 	int			nbr_of_meals;
 	uint16_t	i;
 
-	nbr_of_meals = 0;
-	if (arg == NULL)
-		nbr_of_meals = -1;
-	else
-		nbr_of_meals = my_atoi(arg);
+	nbr_of_meals = get_nbr_of_meals(arg);
 	i = 0;
 	while (i < nbr)
 	{
@@ -77,4 +74,11 @@ static int	set_time(t_philo **philos, char *argv[])
 		i++;
 	}
 	return (1);
+}
+
+static int	get_nbr_of_meals(char *arg)
+{
+	if (arg == NULL)
+		return (-1);
+	return (my_atoi(arg));
 }

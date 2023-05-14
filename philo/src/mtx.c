@@ -6,7 +6,7 @@
 /*   By: iabkadri <iabkadri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/10 11:36:40 by iabkadri          #+#    #+#             */
-/*   Updated: 2023/05/10 17:00:01 by iabkadri         ###   ########.fr       */
+/*   Updated: 2023/05/14 10:23:12 by iabkadri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,8 +44,7 @@ pthread_mutex_t	*get_forks_mtx(uint16_t nbr)
 	if (forks_mtx == NULL)
 		return (NULL);
 	i = 0;
-	while (i < nbr)
-		pthread_mutex_init(&forks_mtx[i++], NULL);
+	initialize_mtx(forks_mtx, nbr);
 	return (forks_mtx);
 }
 
