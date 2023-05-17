@@ -6,7 +6,7 @@
 /*   By: iabkadri <iabkadri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/10 09:06:52 by iabkadri          #+#    #+#             */
-/*   Updated: 2023/05/11 14:58:39 by iabkadri         ###   ########.fr       */
+/*   Updated: 2023/05/17 11:57:05 by iabkadri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ static bool	secure_time_check(t_philo *philos)
 	while (i < nbr_of_philos)
 	{
 		if (philo_is_dead(&philos[i]))
-			return (secure_print("has died", &philos[i]), false);
+			return (dead_print(&philos[i]), false);
 		i++;
 	}
 	return (true);
@@ -55,27 +55,21 @@ static bool	secure_meals_check(t_philo *philos)
 
 bool	philo_eats_all_meals(t_philo *philo)
 {
-	bool	val;
-
 	if (philo->nbr_of_meals == -1)
 		return (false);
-	val = 1;
-	pthread_mutex_lock(philo->mtx.meal_mtx);
+	acquire(philo->mtx.meal_mtx);
 	if (philo->meal < philo->nbr_of_meals)
-		val = 0;
-	pthread_mutex_unlock(philo->mtx.meal_mtx);
-	return (val);
+		return (release(philo->mtx.meal_mtx), false);
+	release(philo->mtx.meal_mtx);
+	return (true);
 }
 
 bool	philo_is_dead(t_philo *philo)
 {
-	bool	val;
-
-	val = 0;
-	pthread_mutex_lock(philo->mtx.time_mtx);
+	acquire(philo->mtx.time_mtx);
 	if (get_current_time() - philo->time.last_eat_time
 		>= philo->time.time_to_die)
-		val = 1;
-	pthread_mutex_unlock(philo->mtx.time_mtx);
-	return (val);
+		return (release(philo->mtx.time_mtx), true);
+	release(philo->mtx.time_mtx);
+	return (false);
 }

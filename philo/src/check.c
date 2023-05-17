@@ -6,7 +6,7 @@
 /*   By: iabkadri <iabkadri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/10 16:52:26 by iabkadri          #+#    #+#             */
-/*   Updated: 2023/05/11 12:46:49 by iabkadri         ###   ########.fr       */
+/*   Updated: 2023/05/17 11:57:31 by iabkadri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,4 +40,11 @@ static bool	is_valid_number(char *arg)
 	while (*arg && is_digit(*arg))
 		arg++;
 	return (*arg == '\0');
+}
+
+void	dead_print(t_philo *philo)
+{
+	acquire(philo->mtx.print_mtx);
+	printf("%ld %u has died\n", calculate_time(philo->time.start_time),
+		philo->id);
 }

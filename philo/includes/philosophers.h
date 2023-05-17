@@ -6,7 +6,7 @@
 /*   By: iabkadri <iabkadri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/10 16:52:19 by iabkadri          #+#    #+#             */
-/*   Updated: 2023/05/10 16:52:20 by iabkadri         ###   ########.fr       */
+/*   Updated: 2023/05/17 11:57:02 by iabkadri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,6 +110,7 @@ void			invalid_arg(char *arg, char *expected_arg);
 
 /*	src/check.c	*/
 int				check_arguments(char *argv[]);
+void			dead_print(t_philo *philo);
 
 /*	src/clear.c	*/
 void			clear(t_philo **data);
